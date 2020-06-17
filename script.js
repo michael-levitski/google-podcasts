@@ -10,10 +10,10 @@ const registerServiceWorker = async () => {
     await navigator.serviceWorker.register(SERVICE_WORKER_PATH)
 }
 
-const loadRegistrationButton = async deferredPrompt => {
+const loadRegistrationButton = deferredPrompt => {
     const button = document.createElement('button')
     button.textContent = 'Open App'
-    button.addEventListener('click', () => {
+    button.addEventListener('click', async () => {
         deferredPrompt.prompt()
         const choice = await deferredPrompt.userChoice
         if (choice.outcome === 'accepted') {
