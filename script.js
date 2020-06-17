@@ -1,7 +1,9 @@
 const SERVICE_WORKER_PATH = location.hostname === 'michael-levitski.github.io' ? '/google-podcasts/sw.js' : '/sw.js'
-let button
+const button = document.createElement('a')
+const prompted = false
 
-const promptUser = async deferredPrompt => {
+const promptUser = async (e, deferredPrompt) => {
+    e.preventDefault()
     deferredPrompt.prompt()
     const choice = await deferredPrompt.userChoice
     if (choice.outcome === 'accepted') {
@@ -9,12 +11,11 @@ const promptUser = async deferredPrompt => {
     } 
 }
 
-const loadRegistrationButton = deferredPrompt => {
-    if (button) return
-    const button = document.createElement('button')
-    button.textContent = 'Open App'
+const convertPromptButton = deferredPrompt => {
+    if (prompted) return
+    button.textContent = 'Install App'
     button.addEventListener('click', promptUser.bind(null, deferredPrompt))
-    document.body.appendChild(button)
+    prompted = true
 }
 
 const registerServiceWorker = async () => {
@@ -23,10 +24,14 @@ const registerServiceWorker = async () => {
 
 addEventListener('beforeinstallprompt', e => {
     e.preventDefault()
-    loadRegistrationButton(e)
+    convertPromptButton(e)
 })
 
 if ('serviceWorker' in navigator) {
+    button.textContent = 'Open App'
+    button.href = './podcasts.html'
+    document.body.appendChild(button)
+
     registerServiceWorker()
 }
 else {
