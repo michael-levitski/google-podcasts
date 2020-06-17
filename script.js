@@ -10,12 +10,13 @@ const registerServiceWorker = async () => {
     await navigator.serviceWorker.register(SERVICE_WORKER_PATH)
 }
 
-const loadRegistrationButton = deferredPrompt => {
+const loadRegistrationButton = async deferredPrompt => {
     const button = document.createElement('button')
     button.textContent = 'Open App'
     button.addEventListener('click', () => {
         deferredPrompt.prompt()
-        if (choiceResult.outcome === 'accepted') {
+        const choice = await deferredPrompt.userChoice
+        if (choice.outcome === 'accepted') {
             window.location = 'https://podcasts.google.com/'
         } 
     })
