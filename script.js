@@ -1,16 +1,26 @@
-const useServiceWorker = async () => {
-    const { serviceWorker } = navigator
-    if (!await serviceWorker.getRegistration()) {
-        const button = document.createElement('button')
-        button.textContent = 'register'
-        button.addEventListener('click',async () => {
-            await serviceWorker.register('/google-podcasts/sw.js')
-        })
-        document.body.appendChild(button)
-    }
+const SERVICE_WORKER_PATH = location.hostname === 'michael-levitski.github.io' ? '/google-podcasts/sw.js' : '/sw.js'
+let deferredPrompt
+
+addEventListener('beforeinstallprompt', e => {
+    e.preventDefault()
+    deferredPrompt = e
+})
+
+const registerServiceWorker = async () => {
+    await navigator.serviceWorker.register(SERVICE_WORKER_PATH)
+    loadRegistrationButton(deferredPrompt)
 }
 
-if ('serviceWorker' in navigator) useServiceWorker()
+const loadRegistrationButton = deferredPrompt => {
+    const button = document.createElement('button')
+    button.textContent = 'Open App'
+    button.addEventListener('click', deferredPrompt.prompt)
+    document.body.appendChild(button)
+}
+
+if ('serviceWorker' in navigator) {
+    registerServiceWorker()
+}
 else {
     alert('Sorry your browser is not compatible with this application.')
     window.location = 'https://podcasts.google.com/'
