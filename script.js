@@ -13,7 +13,12 @@ const registerServiceWorker = async () => {
 const loadRegistrationButton = deferredPrompt => {
     const button = document.createElement('button')
     button.textContent = 'Open App'
-    button.addEventListener('click', () => deferredPrompt.prompt())
+    button.addEventListener('click', () => {
+        deferredPrompt.prompt()
+        if (choiceResult.outcome === 'accepted') {
+            window.location = 'https://podcasts.google.com/'
+        } 
+    })
     document.body.appendChild(button)
 }
 
