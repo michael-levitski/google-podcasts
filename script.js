@@ -1,6 +1,6 @@
 const SERVICE_WORKER_PATH = location.hostname === 'michael-levitski.github.io' ? '/google-podcasts/sw.js' : '/sw.js'
 const button = document.createElement('a')
-const prompted = false
+let prompted = false
 
 const promptUser = async (e, deferredPrompt) => {
     e.preventDefault()
