@@ -14,6 +14,7 @@ const promptUser = async (e, deferredPrompt) => {
 const convertPromptButton = deferredPrompt => {
     if (prompted) return
     button.textContent = 'Install App'
+    button.href = '#'
     button.addEventListener('click', promptUser.bind(null, deferredPrompt))
     prompted = true
 }
