@@ -3,8 +3,7 @@ let deferredPrompt
 
 addEventListener('beforeinstallprompt', e => {
     e.preventDefault()
-    deferredPrompt = e
-    loadRegistrationButton(deferredPrompt)
+    loadRegistrationButton(e)
 })
 
 const registerServiceWorker = async () => {
@@ -14,7 +13,7 @@ const registerServiceWorker = async () => {
 const loadRegistrationButton = deferredPrompt => {
     const button = document.createElement('button')
     button.textContent = 'Open App'
-    button.addEventListener('click', deferredPrompt.prompt)
+    button.addEventListener('click', () => deferredPrompt.prompt())
     document.body.appendChild(button)
 }
 
