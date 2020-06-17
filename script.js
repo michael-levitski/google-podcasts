@@ -4,11 +4,11 @@ let deferredPrompt
 addEventListener('beforeinstallprompt', e => {
     e.preventDefault()
     deferredPrompt = e
+    loadRegistrationButton(deferredPrompt)
 })
 
 const registerServiceWorker = async () => {
     await navigator.serviceWorker.register(SERVICE_WORKER_PATH)
-    loadRegistrationButton(deferredPrompt)
 }
 
 const loadRegistrationButton = deferredPrompt => {
