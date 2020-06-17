@@ -15,7 +15,6 @@ const promptUser = async e => {
 const convertPromptButton = () => {
     if (prompted) return
     button.textContent = 'Install App'
-    button.href = '#'
     button.addEventListener('click', promptUser)
     prompted = true
 }
