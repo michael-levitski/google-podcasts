@@ -1,14 +1,4 @@
 const SERVICE_WORKER_PATH = location.hostname === 'michael-levitski.github.io' ? '/google-podcasts/sw.js' : '/sw.js'
-let deferredPrompt
-
-addEventListener('beforeinstallprompt', e => {
-    e.preventDefault()
-    loadRegistrationButton(e)
-})
-
-const registerServiceWorker = async () => {
-    await navigator.serviceWorker.register(SERVICE_WORKER_PATH)
-}
 
 const promptUser = async deferredPrompt => {
     deferredPrompt.prompt()
@@ -24,6 +14,15 @@ const loadRegistrationButton = deferredPrompt => {
     button.addEventListener('click', promptUser.bind(null, deferredPrompt))
     document.body.appendChild(button)
 }
+
+const registerServiceWorker = async () => {
+    await navigator.serviceWorker.register(SERVICE_WORKER_PATH)
+}
+
+addEventListener('beforeinstallprompt', e => {
+    e.preventDefault()
+    loadRegistrationButton(e)
+})
 
 if ('serviceWorker' in navigator) {
     registerServiceWorker()
