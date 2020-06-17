@@ -1,4 +1,5 @@
 const SERVICE_WORKER_PATH = location.hostname === 'michael-levitski.github.io' ? '/google-podcasts/sw.js' : '/sw.js'
+let button
 
 const promptUser = async deferredPrompt => {
     deferredPrompt.prompt()
@@ -9,6 +10,7 @@ const promptUser = async deferredPrompt => {
 }
 
 const loadRegistrationButton = deferredPrompt => {
+    if (button) return
     const button = document.createElement('button')
     button.textContent = 'Open App'
     button.addEventListener('click', promptUser.bind(null, deferredPrompt))
