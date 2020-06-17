@@ -4,7 +4,7 @@ const useServiceWorker = async () => {
         const button = document.createElement('button')
         button.textContent = 'register'
         button.addEventListener('click',async () => {
-            await serviceWorker.register('/sw.js')
+            await serviceWorker.register('/google-podcasts/sw.js')
         })
         document.body.appendChild(button)
     }
